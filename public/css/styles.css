@@ -1,6 +1,335 @@
-/******* Change Box Model ***************/
+/* General Styles - Mobile First Approach */
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  color: #333;
+  line-height: 1.6;
+}
+
 *,
 *:before,
 *:after {
   box-sizing: border-box;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: white;
+  color: #333;
+}
+
+header .siteName a {
+  color: #333;
+  text-decoration: none;
+  font-size: 1.5rem;
+}
+
+#tools a {
+  color: #333;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+  background-color: #333;
+  color: white;
+  margin: 0;
+}
+
+nav ul li {
+  padding: 1rem;
+}
+
+nav ul li:hover {
+  background-color: #555;
+}
+
+main {
+  padding: 1rem;
+}
+
+.featured-car {
+  width: 100%; 
+  background-color: white; 
+  padding: 20px;
+  position: relative;
+  color: #333;
+}
+
+.hero {
+  position: relative;
+  width: 100%; 
+  height: auto; 
+  color: #333;
+}
+
+.hero img {
+  width: 100%; 
+  height: auto; 
+  filter: grayscale(100%); 
+}
+
+.car-details {
+  position: absolute;
+  top: 100px;
+  left: 30px;
+  background-color: rgba(255, 255, 255, 0.8); 
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  text-align: left; 
+  color: #00a1e0;
+  font-size: small;
+}
+
+.car-details p {
+  font-size: 16px;
+  color: #00a1e0;
+  margin-bottom: 10px;
+}
+
+.cta-button {
+  display: inline-block;
+  background-color: #00a1e0;
+  color: #333;
+  padding: 20px 20px;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-top: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+.cta-button:hover {
+  background-color: #0072c6; 
+}
+
+.reviews, .upgrades {
+  margin-top: 2rem;
+}
+
+.upgrade-items {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  gap: 15px; 
+}
+
+.upgrade-item {
+  width: auto; 
+  background-color: #00a1e0;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+.upgrade-item img {
+  width: 80px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.upgrade-item a {
+  display: block;
+  font-size: 14px;
+  color: #0072c6;
+  text-decoration: none;
+  font-weight: bold;
+  background-color: white;
+}
+
+.upgrade-item a:hover {
+  text-decoration: underline;
+}
+
+footer {
+  text-align: left;
+  padding: 1rem;
+  color: #333;
+  margin-top: 2rem;
+}
+
+footer p {
+  margin: 0;
+}
+
+/* Media Queries for Larger Screens */
+@media (min-width: 768px) {
+  nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    background-color: #333;
+    color: white;
+    margin: 0;
+  }
+
+  body {
+    background: url('/images/site/small_check.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
+
+  #wrapper {
+    margin: 20px 80px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 6px solid #00a1e0;
+    background-color: white;
+  }
+
+  .featured-car {
+    width: 100%; 
+    background-color: white; 
+    padding: 20px;
+    position: relative;
+    color: #333;
+  }
+
+  .hero {
+    position: relative;
+    width: 100%; 
+    height: auto; 
+    color: #333;
+  }
+
+  .hero img {
+    width: 100%; 
+    height: auto; 
+    filter: grayscale(100%); 
+  }
+
+  .car-details {
+    position: absolute;
+    top: 100px;
+    left: 60px;
+    background-color: rgba(255, 255, 255, 0.8); 
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    text-align: left; 
+    color: #00a1e0;
+  }
+
+  .car-details p {
+    font-size: 16px;
+    color: #00a1e0;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .cta-button {
+    display: inline-block;
+    background-color: #00a1e0;
+    color: #333;
+    padding: 20px 20px;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  }
+
+  .cta-button:hover {
+    background-color: #0072c6; 
+  }
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  .upgrades, .reviews {
+    width: 45%; 
+  }
+
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  .reviews ul {
+  
+    padding: 0;
+  }
+
+  .reviews ul li {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+
+  .upgrade-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; 
+  }
+
+  .upgrade-item {
+    width: 45%; 
+    background-color: #00a1e0;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  }
+
+  .upgrade-item img {
+    width: 80px;
+    height: auto;
+    margin-bottom: 10px;
+  }
+
+  .upgrade-item a {
+    display: block;
+    font-size: 14px;
+    color: #0072c6;
+    text-decoration: none;
+    font-weight: bold;
+    background-color: white;
+  }
+
+  .upgrade-item a:hover {
+    text-decoration: underline;
+  }
+
+  footer {
+      margin-top: 3rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+  .cta-button {
+    font-size: 12px; 
+    padding: 12px 15px; 
+  }
+
+  .container {
+    flex-direction: column; 
+  
+  }
+
+  .upgrades, .reviews {
+    margin-bottom: 20px; 
+    width: auto;
+    text-align: left;
+  }
+
+  .upgrade-item {
+    margin-bottom: 10px;
+  }
 }
