@@ -99,7 +99,7 @@ main {
 .cta-button {
   display: inline-block;
   background-color: #00a1e0;
-  color: #333;
+  color: black;
   padding: 20px 20px;
   text-decoration: none;
   font-size: 16px;
@@ -231,7 +231,7 @@ footer p {
   .cta-button {
     display: inline-block;
     background-color: #00a1e0;
-    color: #333;
+    color: black;
     padding: 20px 20px;
     text-decoration: none;
     font-size: 16px;
