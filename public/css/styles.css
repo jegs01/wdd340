@@ -202,7 +202,7 @@ main {
 .namePrice span {
   display: block;
   font-size: 1.1rem;
-  color: #28a745;
+  color: black;
   margin-top: 5px;
 }
 
@@ -249,7 +249,7 @@ main {
 .error-message a {
   display: inline-block;
   padding: 0.75rem 1.5rem;
-  background-color: #3498db;
+  background-color: black;
   color: white;
   font-size: 1rem;
   text-decoration: none;
