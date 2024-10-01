@@ -51,7 +51,6 @@ nav ul li {
 nav ul li a {
   text-decoration: none;
   color: white;
-  font-size: 1.2rem;
   font-weight: bold;
   transition: color 0.3s ease;
 }
@@ -263,6 +262,11 @@ main {
   background-color: #2980b9;
 }
 
+.vehicle-image img {
+  width: 95%; 
+  height: auto; 
+}
+
 footer {
   text-align: left;
   padding: 1rem;
@@ -284,6 +288,10 @@ footer p {
     background-color: #333;
     color: white;
     margin: 0;
+  }
+
+  nav ul li a {
+    font-size: 1.2rem;
   }
 
   body {
@@ -421,6 +429,30 @@ footer p {
   #inv-display li {
     flex: 1 1 200px;
   } 
+
+  .vehicle-detail-container {
+    display: flex;                
+    flex-wrap: wrap;             
+    align-items: flex-start;      
+    margin: 20px;           
+  }
+  
+  .vehicle-image {
+    flex: 1;                    
+    max-width: 400px;          
+    margin-right: 20px; 
+    margin-top: 35px;        
+  }
+  
+  .vehicle-image img {
+    width: 100%;              
+    height: auto;            
+  }
+  
+  .vehicle-info {
+    flex: 2;                
+  }
+  
 
   footer {
       margin-top: 3rem;

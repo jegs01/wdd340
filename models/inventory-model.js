@@ -25,4 +25,35 @@ async function getInventoryByClassificationId(classification_id) {
   }
 }
 
-module.exports = {getClassifications, getInventoryByClassificationId}
+async function getVehicleById(id) {
+  const query = `
+      SELECT 
+          inv_id, 
+          inv_make, 
+          inv_model, 
+          inv_year, 
+          inv_description, 
+          inv_image, 
+          inv_thumbnail, 
+          inv_price, 
+          inv_miles, 
+          inv_color, 
+          c.classification_name
+      FROM 
+          public.inventory i
+      JOIN 
+          public.classification c ON i.classification_id = c.classification_id
+      WHERE 
+          inv_id = $1`;
+
+  try {
+    const result = await pool.query(query, [id]);
+    return result.rows[0]; 
+  } catch (error) {
+    console.error(`Error fetching vehicle by ID ${id}:`, error);
+    throw error; 
+  }
+}
+
+
+module.exports = {getClassifications, getInventoryByClassificationId, getVehicleById}
