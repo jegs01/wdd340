@@ -6,7 +6,7 @@ const invCont = {}
 /* ***************************
  *  Build inventory by classification view
  * ************************** */
-invCont.buildByClassificationId = async function (req, res, next) {
+invCont.buildByClassificationId = utilities.handleErrors(async function (req, res, next) {
   const classification_id = req.params.classificationId
   const data = await invModel.getInventoryByClassificationId(classification_id)
   const grid = await utilities.buildClassificationGrid(data)
@@ -17,9 +17,9 @@ invCont.buildByClassificationId = async function (req, res, next) {
     nav,
     grid,
   })
-}
+})
 
-invCont.getVehicleDetails = async (req, res) => {
+invCont.getVehicleDetails = utilities.handleErrors(async (req, res) => {
   const vehicleId = req.params.id; 
   const vehicle = await invModel.getVehicleById(vehicleId); 
   const nav = await utilities.getNav();
@@ -38,6 +38,6 @@ invCont.getVehicleDetails = async (req, res) => {
       nav,
       vehicleDetailHTML,
   });
-};
+});
 
 module.exports = invCont
