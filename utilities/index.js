@@ -86,7 +86,21 @@ Util.buildVehicleDetail = (vehicle, req) => {
   `;
 };
 
-/* ****************************************
+Util.buildClassificationList = async function () {
+  let data = await invModel.getClassifications();
+  let classificationList = [];
+
+  data.rows.forEach((row) => {
+      classificationList.push({
+          id: row.classification_id,
+          name: row.classification_name
+      });
+  });
+
+  return classificationList;
+};
+
+/* **************************************** 
  * Middleware For Handling Errors
  * Wrap other function in this for 
  * General Error Handling

@@ -74,7 +74,7 @@ async function loginAccount(req, res) {
     
     if (loginResult.success) {
         req.flash("notice", "Login Successful");
-        res.status(200).render("index", { title: "Home", nav, errors: null });
+        res.status(200).redirect("/");
     } else {
         req.flash("notice", loginResult.message);
         res.status(401).render("account/login", {

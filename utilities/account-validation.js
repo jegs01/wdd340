@@ -59,12 +59,64 @@ validate.loginRules = () => {
         .isEmail()
         .withMessage("A valid email is required."),
   
-      body("account_password")
+        body("account_password")
         .trim()
         .notEmpty()
-        .withMessage("Password is required."),
+        .isStrongPassword({
+          minLength: 12,
+          minLowercase: 1,
+          minUppercase: 1,
+          minNumbers: 1,
+          minSymbols: 1,
+        })
+        .withMessage("Password does not meet requirements."),
     ];
 }
+
+validate.addClassification = () => { 
+  return [
+      body("classification_name")
+          .exists().withMessage("Classification name is required.")
+          .isAlphanumeric().withMessage("Classification name must be alphanumeric.")
+  ];
+};
+
+validate.inventoryValidationRules = () => { 
+  return [
+    body('inv_make')
+      .isLength({ min: 3 }).withMessage('Make must be at least 3 characters long.')
+      .matches(/^[A-Za-z0-9 ]+$/).withMessage('Make must contain only alphanumeric characters.'),
+    
+    body('inv_model')
+      .isLength({ min: 3 }).withMessage('Model must be at least 3 characters long.')
+      .matches(/^[A-Za-z0-9 ]+$/).withMessage('Model must contain only alphanumeric characters.'),
+
+    body('inv_year')
+      .isInt({ min: 1900, max: 2100 }).withMessage('Year must be a valid 4-digit year.'),
+
+    body('inv_description')
+      .notEmpty().withMessage('Description is required.'),
+
+    body('inv_price')
+      .isFloat({ min: 0 }).withMessage('Price must be a positive number.'),
+
+    body('inv_miles')
+      .isInt({ min: 0 }).withMessage('Miles must be a positive number.'),
+
+    body('inv_color')
+      .notEmpty().withMessage('Color is required.'),
+
+    body('classification_id')
+      .notEmpty().withMessage('Please choose a classification.'),
+
+    body('inv_image')
+      .notEmpty().withMessage('Image field cannot be empty.'),
+      
+    body('inv_thumbnail')
+      .notEmpty().withMessage('Thumbnail field cannot be empty.')
+  ];
+};
+
 
 /* ******************************
  * Check data and return errors or continue to registration
@@ -86,7 +138,7 @@ validate.checkRegData = async (req, res, next) => {
       return
     }
     next()
-}
+} 
 
 validate.checkLoginRegData = async (req, res, next) => {
     const { account_email } = req.body
@@ -104,5 +156,66 @@ validate.checkLoginRegData = async (req, res, next) => {
     }
     next()
 }
+
+validate.checkClassificationRegData = async (req, res, next) => {
+  const { classification_name } = req.body
+  let errors = []
+  errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    res.render("inventory/add-classification", {
+      errors,
+      title: "Add New Classification",
+      nav,
+      classification_name
+    })
+    return
+  }
+  next()
+}
+
+validate.checkInventoryRegData = async (req, res, next) => {
+  const { 
+    inv_make, 
+    inv_model, 
+    inv_year, 
+    inv_description, 
+    inv_price, 
+    inv_miles, 
+    inv_color, 
+    classification_id,
+    inv_image,
+    inv_thumbnail 
+  } = req.body;
   
+  let errors = []
+  errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    let classificationList = await utilities.buildClassificationList();
+
+    res.render("inventory/add-inventory", {
+      errors,
+      title: "Add New Vehicle",
+      nav,
+      classificationList,
+      inv_make, 
+      inv_model, 
+      inv_year, 
+      inv_description, 
+      inv_price, 
+      inv_miles, 
+      inv_color, 
+      classification_id,
+      inv_image,
+      inv_thumbnail
+    });
+    return;
+  }
+
+  next();
+};
+
+   
 module.exports = validate

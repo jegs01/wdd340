@@ -23,10 +23,12 @@
 
     <label for="account_password">Password:</label>
     <div class="password-container">
-        <input type="password" id="account_password" name="account_password" required>
+        <input type="password" id="account_password" name="account_password" required
+        pattern="(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*]).{12,}" 
+            title="Password must be at least 12 characters, contain at least 1 capital letter, 1 number, and 1 special character.">
         <a href="#" id="togglePassword">Show Password</a>
     </div>
-
+    <p>Password must be at least 12 characters, <br>contain at least 1 capital letter, 1 number, <br>and 1 special character.</p>
     <button type="submit">Log In</button>
     </form>
 </div>
