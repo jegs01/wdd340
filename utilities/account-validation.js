@@ -1,6 +1,7 @@
 const utilities = require(".")
 const { body, validationResult } = require("express-validator")
 const accountModel = require("../models/account-model")
+const invModel = require("../models/inventory-model")
 const validate = {}
 
 /*  **********************************
@@ -183,7 +184,6 @@ validate.checkInventoryRegData = async (req, res, next) => {
     inv_price, 
     inv_miles, 
     inv_color, 
-    classification_id,
     inv_image,
     inv_thumbnail 
   } = req.body;
@@ -207,9 +207,57 @@ validate.checkInventoryRegData = async (req, res, next) => {
       inv_price, 
       inv_miles, 
       inv_color, 
-      classification_id,
       inv_image,
       inv_thumbnail
+    });
+    return;
+  }
+
+  next();
+};
+
+validate.checkEditInventoryRegData = async (req, res, next) => {
+  const { 
+    inv_make, 
+    inv_model, 
+    inv_year, 
+    inv_description, 
+    inv_price, 
+    inv_miles, 
+    inv_color, 
+    classification_id,
+    inv_image,
+    inv_thumbnail,
+    inv_id
+  } = req.body;
+  
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    const nav = await utilities.getNav();
+    const classificationList = await invModel.getSingleClassifications();
+
+    const selectedClassification = classificationList.find(c => c.classification_id === parseInt(classification_id));
+
+    res.render("inventory/edit-inventory", {
+      errors: errors.array(),
+      title: `Edit ${inv_make} ${inv_model}`,
+      nav,
+      classificationList,
+      inventoryItem: {
+        inv_make, 
+        inv_model, 
+        inv_year, 
+        inv_description, 
+        inv_price, 
+        inv_miles, 
+        inv_color, 
+        classification_id,
+        classification_name: selectedClassification ? selectedClassification.classification_name : '',
+        inv_image,
+        inv_thumbnail,
+        inv_id
+      } 
     });
     return;
   }

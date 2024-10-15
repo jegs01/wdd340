@@ -1,5 +1,7 @@
 const pool = require("../database/")
 const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 
 /* *****************************
 *   Register new account
@@ -26,33 +28,17 @@ async function checkExistingEmail(account_email){
     }
 }
 
-
-/* **********************
- *   Login account
- * ********************* */
-async function checkLoginCredentials(account_email, account_password) {
+async function getAccountByEmail (account_email) {
     try {
-        const sql = "SELECT * FROM account WHERE account_email = $1";
-        const result = await pool.query(sql, [account_email]);
-
-        if (result.rowCount === 0) {
-            return { success: false, message: "Email not found" };
-        }
-
-        const account = result.rows[0];
-
-        const match = await bcrypt.compare(account_password, account.account_password);
-
-        if (match) {
-            return { success: true, account };
-        } else {
-            return { success: false, message: "Incorrect password" };
-        }
+      const result = await pool.query(
+        'SELECT account_id, account_firstname, account_lastname, account_email, account_type, account_password FROM account WHERE account_email = $1',
+        [account_email])
+      return result.rows[0]
     } catch (error) {
-        return { success: false, message: error.message };
+      return new Error("No matching email found")
     }
-}
+  }
 
 
-module.exports = { registerAccount, checkExistingEmail, checkLoginCredentials }
+module.exports = { registerAccount, checkExistingEmail, getAccountByEmail }
 

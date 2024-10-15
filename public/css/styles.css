@@ -116,6 +116,13 @@ main {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
+button[disabled] {
+  background-color: #ccc; 
+  color: #777;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 .cta-button:hover {
   background-color: #0072c6; 
 }
@@ -281,6 +288,10 @@ form {
   text-align: center;
 }
 
+.edit-form {
+  width: 300px;
+}
+
 form label {
   display: block;
   margin-bottom: 2px;
@@ -364,6 +375,51 @@ textarea.valid {
 textarea.invalid {
   background-color: #ffe6e6; 
 }
+
+#classificationList {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  margin-bottom: 25px;
+}
+
+#inventoryDisplay {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#inventoryDisplay thead {
+  background-color: #f2f2f2;
+}
+
+#inventoryDisplay th {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 2px solid #ccc;
+}
+
+#inventoryDisplay td {
+  padding: 8px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+#inventoryDisplay tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+#inventoryDisplay a {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+
+#inventoryDisplay a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
 
 footer {
   text-align: left;
@@ -467,6 +523,10 @@ footer p {
     justify-content: space-between;
     align-items: flex-start;
     padding: 20px;
+  }
+
+  .edit-form {
+    width: 400px;
   }
 
   .upgrades, .reviews {

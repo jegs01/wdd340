@@ -15,4 +15,7 @@ router.post(
     "/login", regValidate.loginRules(),
     regValidate.checkLoginRegData, utilities.handleErrors(accountController.loginAccount))
 
+router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildLoginDashboard))
+router.get('/logout', utilities.handleErrors(accountController.logoutAccount));
+
 module.exports = router

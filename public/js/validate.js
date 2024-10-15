@@ -27,3 +27,27 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector("#updateForm");
+    const updateBtn = document.querySelector("#updateButton");
+    const initialData = new FormData(form);
+
+    const isFormChanged = () => {
+        const currentData = new FormData(form);
+        for (let [key, value] of initialData.entries()) {
+            if (currentData.get(key) !== value) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    form.addEventListener("input", function() {
+        if (isFormChanged()) {
+            updateBtn.removeAttribute("disabled");
+        } else {
+            updateBtn.setAttribute("disabled", "true");
+        }
+    });
+});
