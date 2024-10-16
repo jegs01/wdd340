@@ -219,6 +219,10 @@ button[disabled] {
   margin-top: 20px;
 }
 
+#messages li {
+  color: #076646;
+}
+
 #inv-display li {
   flex: 1 1 calc(100% - 20px);
   margin: 10px;
