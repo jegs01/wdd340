@@ -4,7 +4,7 @@
   </span>
   <div id="tools">
     <% if (typeof user !== 'undefined') { %>
-        <span>Welcome, <a href="/account/manage" title="Manage your account"><%= user.account_firstname %></a></span>
+      <span><a href="/account/update/<%= user.account_id %>" title="Manage your account">Welcome, <%= user.account_firstname %></a></span>
         <a href="/account/logout" title="Click to log out">Logout</a>
     <% } else { %>
         <a href="/account/login" title="Click to log in">My Account</a>

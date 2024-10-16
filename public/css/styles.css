@@ -277,6 +277,7 @@ button[disabled] {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-bottom: 10px;
 }
 
 form {
@@ -419,7 +420,6 @@ textarea.invalid {
   color: #0056b3;
   text-decoration: underline;
 }
-
 
 footer {
   text-align: left;

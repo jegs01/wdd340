@@ -123,12 +123,30 @@ async function loginAccount(req, res) {
 
 
 async function buildLoginDashboard(req, res, next) {
-  let nav = await utilities.getNav()
-  res.render("account/dashboard", {
+  try {
+    let nav = await utilities.getNav();
+    
+    const token = req.cookies.jwt;
+
+    if (!token) {
+      req.flash('notice', 'You must be logged in to access the dashboard.');
+      return res.redirect('/account/login');
+    }
+
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
+    res.render("account/dashboard", {
       title: "Account Management",
       nav,
+      account_firstname: decoded.account_firstname,
+      account_type: decoded.account_type,
       errors: null
-  }) 
+    });
+  } catch (error) {
+    console.error("Error building dashboard:", error);
+    req.flash('error', 'An error occurred while loading the dashboard.');
+    return res.redirect('/account/login');
+  }
 }
 
 async function logoutAccount(req, res) {
@@ -149,4 +167,73 @@ async function logoutAccount(req, res) {
   }
 }
 
-module.exports = { buildLogin, buildRegister, registerAccount, loginAccount, buildLoginDashboard, logoutAccount }
+async function getUpdateView(req, res) {
+  try {
+      const accountId = req.params.id;
+      const account = await accountModel.getAccountById(accountId);
+
+      if (!account) {
+          req.flash("notice", "Account not found.");
+          return res.redirect("/account");
+      }
+
+      let nav = await utilities.getNav();
+      const { account_id, account_firstname, account_lastname, account_email } = account;
+
+      res.render("account/update-account", {
+          title: "Update Account",
+          nav,
+          account_id,
+          account_firstname,
+          account_lastname,
+          account_email,
+          errors: null
+      });
+  } catch (error) {
+      console.error("Error rendering update account view:", error);
+      req.flash("error", "An error occurred while loading the update account page.");
+      res.redirect("/account");
+  }
+}
+
+
+async function updateAccount (req, res) {
+  try {
+      const account = {
+        account_firstname: req.body.firstname,
+        account_lastname: req.body.lastname,
+        account_email: req.body.email,
+        account_id: req.body.account_id
+    };
+    const updateResult = await accountModel.updateAccount(account);
+    if (updateResult) {
+      req.flash('notice', 'Account updated successfully.');
+      res.redirect('/account');
+    } else {
+      req.flash('error', 'Failed to update account.');
+      res.redirect('/account/update');
+    }
+  } catch (error) {
+    req.flash('error', 'Error updating account.');
+    res.redirect('/account/update');
+  }
+};
+
+async function changePassword (req, res) {
+  try {
+    const passwordChangeResult = await accountModel.updatePassword(req.body.account_id, req.body.password);
+    if (passwordChangeResult) {
+      req.flash('notice', 'Password updated successfully.');
+      res.redirect('/account');
+    } else {
+      req.flash('error', 'Failed to update password.');
+      res.redirect('/account/update');
+    }
+  } catch (error) {
+    req.flash('error', 'Error updating password.');
+    res.redirect('/account/update');
+  }
+};
+
+
+module.exports = { buildLogin, buildRegister, registerAccount, loginAccount, buildLoginDashboard, logoutAccount, getUpdateView, updateAccount, changePassword  }

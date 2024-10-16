@@ -265,5 +265,93 @@ validate.checkEditInventoryRegData = async (req, res, next) => {
   next();
 };
 
+validate.updateAccountRules = () => {
+  return [
+    body("firstname")
+      .trim()
+      .escape()
+      .notEmpty()
+      .withMessage("Please provide a first name.")
+      .isLength({ min: 1 })
+      .withMessage("First name must be at least 1 character long."),
+
+    body("lastname")
+      .trim()
+      .escape()
+      .notEmpty()
+      .withMessage("Please provide a last name.")
+      .isLength({ min: 2 })
+      .withMessage("Last name must be at least 2 characters long."),
+
+    body("email")
+      .trim()
+      .isEmail()
+      .withMessage("A valid email is required.")
+      .normalizeEmail()
+  ];
+};
+
+validate.checkAccountUpdateData = async (req, res, next) => {
+  const { firstname, lastname, email, account_id } = req.body
+  let errors = []
+  errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    const account_firstname = firstname;
+    const account_lastname = lastname;
+    const account_email = email;
+    res.render('account/update-account', {
+      errors,
+      title: "Update Account",
+      nav,
+      account_firstname,
+      account_lastname,
+      account_email,
+      account_id
+    })
+    return
+  }
+  next()
+};
+
+validate.updatePasswordRules = () => {
+  return [
+      body("password")
+      .trim()
+      .notEmpty()
+      .isStrongPassword({
+        minLength: 12,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+      .withMessage("Password does not meet requirements."),
+  ];
+};
+
+validate.checkPasswordUpdateData = async (req, res, next) => {
+  const { firstname, lastname, email, account_id } = req.body
+  let errors = []
+  errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    const account_firstname = firstname;
+    const account_lastname = lastname;
+    const account_email = email;
+    res.render('account/update-account', {
+      errors,
+      title: "Update Account",
+      nav,
+      account_firstname,
+      account_lastname,
+      account_email,
+      account_id
+    })
+    return
+  }
+  next()
+};
+
    
 module.exports = validate
