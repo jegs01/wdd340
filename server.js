@@ -14,6 +14,7 @@ const app = express();
 const staticRoutes = require("./routes/static");
 const inventoryRoute = require("./routes/inventoryRoute");
 const accountRoute = require("./routes/accountRoute");
+const messageRoute = require("./routes/messageRoute");
 const baseController = require("./controllers/baseController");
 const utilities = require("./utilities/");
 const session = require("express-session");
@@ -71,6 +72,7 @@ app.use(utilities.checkJWTToken);
 app.get('/', utilities.handleErrors(baseController.buildHome));
 app.use("/inv", utilities.handleErrors(inventoryRoute));
 app.use("/account", utilities.handleErrors(accountRoute));
+app.use("/message", utilities.handleErrors(messageRoute));
 
 app.use(async (req, res, next) => {
   next({ status: 404, message: 'Sorry, we appear to have lost that page.' });

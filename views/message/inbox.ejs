@@ -1,0 +1,36 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+<% } else { 
+    res.redirect('/'); 
+} %>
+
+<ul>
+    <li><a href="/message/new">Compose New Message</a></li>
+    <% if (archivedMessageCount > 0) { %>
+        <li><a href="/message/archive-message">View <%= archivedMessageCount %> Archived Message<%= archivedMessageCount === 1 ? '' : 's' %></a></li>
+    <% } %>
+</ul>
+<% if (noMessages) { %>
+    <p>No messages in your inbox.</p>
+<% } else { %>
+    <table>
+        <thead>
+            <tr>
+                <th>Received</th>
+                <th>Subject</th>
+                <th>From</th>
+                <th>Read</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% messages.forEach(message => { %>
+                <tr>
+                    <td><%= message.message_created %></td>
+                    <td><a href="/message/open/<%= message.message_id %>"><%= message.message_subject %></a></td>
+                    <td><%= message.sender_firstname %> <%= message.sender_lastname %></td>
+                    <td><%= message.message_read ? 'true' : 'false' %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+<% } %>

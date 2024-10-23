@@ -1,0 +1,37 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+<% } else { 
+    res.redirect('/'); 
+} %>
+
+<%- messages() %>
+<% if (errors) { %>
+    <ul class="notice">
+        <% errors.array().forEach(error => { %>
+            <% if (error.msg !== "Invalid value") { %>
+                <li><%= error.msg %></li>
+            <% } %>
+        <% }) %>
+    </ul>
+<% } %>
+
+<div class="form-container">
+    <form action="/message/reply/<%= message_id %>" method="POST">
+
+        <label for="messageTo">Recipient:</label>
+        <input type="text" value="<%= message.sender_firstname %> <%= message.sender_lastname %>" disabled class="full-width-input">
+    
+        <input type="hidden" name="messageTo" value="<%= messageTo || message.sender_id %>">
+    
+        <input type="hidden" name="prefix" value="RE: ">
+    
+        <label for="subject">Subject:</label>
+        <input type="text" name="subject" required class="full-width-input" value="RE: <%= subject %>">
+    
+        <label for="body">Message Body:</label>
+        <textarea name="messageBody" required class="full-width-textarea"><%= messageBody || '' %></textarea>
+    
+        <button type="submit">Send Message</button>
+    </form>    
+</div>
+

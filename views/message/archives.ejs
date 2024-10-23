@@ -1,0 +1,32 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+<% } else { 
+    res.redirect('/'); 
+} %>
+
+<a href="/message/inbox">Return to Inbox</a>
+
+<% if (noMessages) { %>
+    <p>No archive messages in your inbox.</p>
+<% } else { %>
+    <table>
+        <thead>
+            <tr>
+                <th>Received</th>
+                <th>Subject</th>
+                <th>From</th>
+                <th>Read</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% messages.forEach(message => { %>
+                <tr>
+                    <td><%= message.message_created %></td>
+                    <td><a href="/message/open/<%= message.message_id %>"><%= message.message_subject %></a></td>
+                    <td><%= message.sender_firstname %> <%= message.sender_lastname %></td>
+                    <td><%= message.message_read ? 'true' : 'false' %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+<% } %>

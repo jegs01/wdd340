@@ -1,4 +1,5 @@
 const accountModel = require("../models/account-model")
+const MessageModel = require('../models/message-model')
 const utilities = require("../utilities/")
 const bcrypt = require("bcryptjs")
 const jwt = require('jsonwebtoken');
@@ -134,13 +135,16 @@ async function buildLoginDashboard(req, res, next) {
     }
 
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    const userId = decoded.account_id;
+    const unreadMessageCount = await MessageModel.countUnreadMessages(userId);
 
     res.render("account/dashboard", {
       title: "Account Management",
       nav,
       account_firstname: decoded.account_firstname,
       account_type: decoded.account_type,
-      errors: null
+      errors: null,
+      unreadMessageCount
     });
   } catch (error) {
     console.error("Error building dashboard:", error);

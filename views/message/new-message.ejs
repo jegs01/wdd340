@@ -1,0 +1,40 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+<% } else { 
+    res.redirect('/'); 
+} %>
+
+<%- messages() %>
+<% if (errors) { %>
+    <ul class="notice">
+        <% errors.array().forEach(error => { %>
+            <% if (error.msg !== "Invalid value") { %>
+                <li><%= error.msg %></li>
+            <% } %>
+        <% }) %>
+    </ul>
+<% } %>
+
+<div class="form-container">
+    <form action="/message/new" method="POST">
+        <label for="messageTo">Recipient:</label>
+        <select name="messageTo" required class="full-width-select">
+            <option value="" disabled <%= !messageTo ? 'selected' : '' %>>Select a recipient</option>
+            <% users.forEach(function(user) { %>
+                <option value="<%= user.account_id %>" <%= user.account_id == messageTo ? 'selected' : '' %>>
+                    <%= user.account_firstname %> <%= user.account_lastname %>
+                </option>
+            <% }) %>
+        </select>
+    
+        <label for="subject">Subject:</label>
+        <input type="text" name="subject" required class="full-width-input" value="<%= subject %>">
+    
+        <label for="body">Message Body:</label>
+        <textarea name="messageBody" required class="full-width-textarea"><%= messageBody %></textarea>
+    
+        <button type="submit">Send Message</button>
+    </form>
+</div>
+
+<script src="/js/validate.js"></script>

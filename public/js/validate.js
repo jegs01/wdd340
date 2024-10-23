@@ -51,3 +51,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+function confirmDelete(messageId) {
+    const modal = document.getElementById('deleteModal');
+    modal.style.display = 'block';
+
+    document.getElementById('confirmBtn').onclick = function() {
+        window.location.href = `/message/delete/${messageId}`;
+    };
+
+    document.getElementById('cancelBtn').onclick = function() {
+        modal.style.display = 'none';
+    };
+}
+
+window.onclick = function(event) {
+    const modal = document.getElementById('deleteModal');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+};

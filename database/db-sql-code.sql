@@ -236,6 +236,16 @@ VALUES   (
     5
   );
 
+CREATE TABLE message (
+  message_id SERIAL PRIMARY KEY,
+  message_subject VARCHAR(255) NOT NULL,
+  message_body TEXT NOT NULL,
+  message_created TIMESTAMPTZ DEFAULT NOW(),
+  message_to INTEGER NOT NULL,
+  message_from INTEGER NOT NULL,
+  message_read BOOLEAN DEFAULT FALSE,
+  message_archived BOOLEAN DEFAULT FALSE
+);
 
 -- 4
 UPDATE inventory

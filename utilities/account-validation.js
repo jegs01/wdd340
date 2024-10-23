@@ -1,6 +1,7 @@
 const utilities = require(".")
 const { body, validationResult } = require("express-validator")
 const accountModel = require("../models/account-model")
+const MessageModel = require('../models/message-model')
 const invModel = require("../models/inventory-model")
 const validate = {}
 
@@ -353,5 +354,79 @@ validate.checkPasswordUpdateData = async (req, res, next) => {
   next()
 };
 
+validate.messageFormRules = () => {
+  return [
+
+    body("messageTo")
+      .notEmpty()
+      .withMessage("Recipient is required."),
+
+    body("subject")
+      .trim()
+      .notEmpty()
+      .withMessage("Subject is required."),
+
+    body("messageBody")
+      .trim()
+      .notEmpty()
+      .withMessage("Message body is required.")
+  ];
+};
+
+validate.checkFormData = async (req, res, next) => {
+  const { subject, messageBody, messageTo } = req.body
+  let errors = []
+  errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    const users = await accountModel.getAllUsers();
+    res.render('message/new-message', {
+      title: "Create a New Message",
+      nav,
+      errors,
+      subject,
+      messageBody,
+      users,
+      messageTo
+    })
+    return
+  }
+  next()
+};
+
+validate.checkReplyFormData = async (req, res, next) => {
+  const { subject, messageBody, messageTo } = req.body;
+  const { message_id } = req.params;
+  const message = await MessageModel.findById(message_id);
+  if (!message) {
+      return res.status(404).send('Message not found');
+  }
+
+  const sender = await accountModel.getAccountById(message.message_from);
+
+  const messageWithSender = {
+      ...message,
+      sender_id: sender ? sender.account_id : 'Unknown',
+      sender_firstname: sender ? sender.account_firstname : 'Unknown',
+      sender_lastname: sender ? sender.account_lastname : 'Unknown',
+  };
+  let errors = []
+  errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    res.render('message/replyForm', {
+      errors,
+      title: "Reply",
+      nav,
+      subject,
+      messageBody,
+      messageTo,
+      message_id,
+      message: messageWithSender,
+    })
+    return
+  }
+  next()
+};
    
 module.exports = validate

@@ -99,11 +99,23 @@ async function updatePassword(account_id, new_password) {
     }
 }
 
+async function getAllUsers() {
+    try {
+        const sql = `SELECT account_id, account_firstname, account_lastname FROM account`;
+        const result = await pool.query(sql);
+        return result.rows;
+    } catch (error) {
+        console.error("Error fetching all users:", error);
+        throw new Error("Unable to retrieve users at this time. Please try again later.");
+    }
+}
+
 module.exports = { 
     registerAccount, 
     checkExistingEmail, 
     getAccountByEmail, 
     getAccountById, 
     updateAccount, 
-    updatePassword 
+    updatePassword,
+    getAllUsers
 };
