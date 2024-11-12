@@ -1,47 +1,33 @@
-## Getting Started
+# CSE 340 Class Project by Kolawole Jegede
 
-This document is intended to get you started quickly in building a backend driven Node.js application complete with pages and content, backend logic and a PostgreSQL database for data storage.
-## Prerequisites
+This project was developed as part of the **CSE 340** course at Brigham Young University - Idaho. The project is a server-side rendered application built using **Node.js**, with **EJS** as the view engine and **PostgreSQL** as the database. It follows the **MVC (Model-View-Controller)** architecture, making it well-organized, maintainable, and scalable.
 
-The only prerequisite software required to have installed at this point is Git for version control and a code editor - we will use VS Code (VSC).
+## Project Features
 
-## Package Management
+This project provides a fully functional web application with the following features:
 
-The foundation of the project development software is Node. While functional, Node depends on "packages" to add functionality to accomplish common tasks. This requires a package manager. Three common managers are NPM (Node Package Manager), YARN, and PNPM. While all do the same thing, they do it slightly differently. We will use PNPM for two reasons: 1) All packages are stored on your computer only once and then symlinks (system links) are created from the package to the project as needed, 2) performance is increased meaning that when the project builds, it does so faster.
-You will need to either install or activate PNPM before using it. See https://pnpm.io/
+- **User Authentication:** Users can sign up, log in, and manage their accounts securely.
+- **CRUD Operations:** The app enables Create, Read, Update, and Delete operations on database records, facilitating data interaction for registered users.
+- **Messaging Capabilities:** Registered users can send and receive messages within the platform, adding an interactive layer to the application.
+- **MVC Architecture:** The project adheres to the MVC design pattern, ensuring a clean separation of concerns and a well-organized codebase.
+- **Dynamic Server-Side Rendering:** Built with EJS, the application dynamically renders server-side content for a seamless user experience.
 
-## Install the Project Dependencies
+## Technologies Used
 
-1. Open the downloaded project folder (where this file is located) in VS Code (VSC).
-2. Open the VSC terminal: Terminal > New Window.
-3. Run the following command in the terminal:
+- **Node.js** - A powerful JavaScript runtime for server-side development.
+- **Express.js** - A robust web application framework for handling routing and middleware.
+- **EJS (Embedded JavaScript)** - A templating engine that enables dynamic server-side rendering.
+- **PostgreSQL** - A reliable relational database for storing and managing data securely.
+- **MVC Architecture** - Used to structure the application effectively.
 
-    pnpm install
+## Live Project
 
-4. The first time it may take a few minutes, depending on the speed of your computer and the speed of your Internet connection. This command will instruct PNPM to read the package.json file and download and install the dependencies (packages) needed for the project. It will build a "node_modules" folder storing each dependency and its dependencies. It should also create a pnpm-lock.yaml file. This file should NEVER be altered by you. It is an internal file (think of it as an inventory) that PNPM uses to keep track of everything in the project.
+You can explore the live version of the project here: [https://wdd340-s22a.onrender.com/](https://wdd340-s22a.onrender.com/).
 
-## Start the Express Server
+## About the Developer
 
-With the packages installed you're ready to run the initial test.
-1. If the VSC terminal is still open use it. If it is closed, open it again using the same command as before.
-2. Type the following command, then press Enter:
+This application was developed by **Kolawole Jegede** as part of the coursework for CSE 340. It demonstrates proficiency in server-side rendering, database management, and MVC architecture while delivering a user-friendly experience with messaging capabilities.
 
-    pnpm run dev
+## Acknowledgments
 
-3. If the command works, you should see the message "app listening on localhost:5500" in the console.
-4. Open the package.json file.
-5. Note the "Scripts" area? There is a line with the name of "dev", which tells the nodemon package to run the server.js file.
-6. This is the command you just ran.
-7. Open the server.js file.
-8. Near the bottom you'll see two variables "Port" and "Host". The values for the variables are stored in the .env file.
-9. These variables are used when the server starts on your local machine.
-
-## Move the demo file
-
-When you installed Git and cloned the remote repository in week 1, you should have created a simple web page.
-1. Find and move that simple web page to the public folder. Be sure to note its name.
-## Test in a browser
-
-1. Go to http://localhost:5500 in a browser tab. Nothing should be visible as the server has not been setup to repond to that route.
-2. Add "/filename.html" to the end of the URL (replacing filename with the name of the file you moved to the public folder).
-3. You should see that page in the browser.
+Special thanks to **Brigham Young University - Idaho** and the **CSE 340 course** for the opportunity to learn and implement server-side technologies in a real-world project context.
